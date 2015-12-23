@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'rails_12factor', group: :production
 gem 'dalli'
+gem 'newrelic_rpm'
 group :development, :test do
   gem 'byebug'
 end
