@@ -25,6 +25,7 @@ group :development do
   gem 'quiet_assets'
   gem 'rails_layout'
   gem 'spring-commands-rspec'
+  gem 'i18n_generators'
 end
 group :development, :test do
   gem 'factory_girl_rails'
