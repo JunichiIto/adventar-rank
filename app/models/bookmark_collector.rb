@@ -54,11 +54,15 @@ class BookmarkCollector
     end
     if found
       found.last.tap do |count|
-        puts "[INFO] Bookmark count detected: #{entry_url} / #{count}"
+        logger.info "[INFO] Bookmark count detected: #{entry_url} / #{count}"
       end
     else
-      puts "[WARN] Bookmark missing: #{entry_url}"
+      logger.warn "[WARN] Bookmark missing: #{entry_url}"
       nil
     end
+  end
+
+  def logger
+    Rails.logger
   end
 end

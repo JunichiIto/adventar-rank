@@ -6,7 +6,7 @@ h1 Adventar Ranking
   = submit_tag '送信'
 
 - if @adventar_info.present?
-  h1 = link_to @adventar_info.title, params[:url]
+  h2 = link_to @adventar_info.title, params[:url]
   table.table
     thead
       tr
@@ -24,4 +24,4 @@ h1 Adventar Ranking
           td = current_count != prev_count ? rank = i : rank
           td = link_to (entry.title.presence || entry.url), entry.url, target: '_blank'
           td = entry.date
-          td = entry.bookmark_count
+          td = link_to entry.bookmark_count, bookmark_url(entry.url), target: '_blank'
