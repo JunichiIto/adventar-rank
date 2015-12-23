@@ -21,8 +21,11 @@ p.how-to-use AdventarのURLを送信すると、はてなブックマーク数�
         - current_count = entry.bookmark_count
         - prev_count = @adventar_info[:entries][i - 2].try(:bookmark_count)
         - current_count != prev_count ? rank = i : rank
-        tr
-          td.centered = rank
+        tr(class="#{'best-3' if rank <= 3}")
+          td.centered
+            - if rank.between?(1, 3)
+              = fa_icon 'trophy', class: "rank-#{rank}"
+            =< rank
           td = link_to (entry.title.presence || entry.url), entry.url, target: '_blank'
           td.no-wrap = entry.date
           td.righted = link_to entry.bookmark_count, bookmark_url(entry.url), target: '_blank'
