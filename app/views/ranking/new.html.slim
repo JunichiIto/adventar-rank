@@ -2,7 +2,7 @@ h1 Adventar Ranking
 
 = form_tag '/ranking', method: :get, class: 'form-inline' do
   .form-group
-    label URL
+    label(for='url') URL
     =< text_field_tag :url, params[:url], class: 'form-control', style: 'width:280px;'
   = submit_tag '送信', class: 'btn btn-default'
 
