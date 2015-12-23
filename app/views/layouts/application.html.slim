@@ -15,3 +15,13 @@ html
         .col-md-8.col-md-offset-2.col-main
           == render 'layouts/messages'
           == yield
+      .row
+        .col-md-8.col-md-offset-2
+          .footer
+            span.creator
+              | Created by
+              =<> link_to 'Junichi Ito', 'https://twitter.com/jnchito/', target: '_blank'
+            | /
+            span.source-code<
+              | Source code in
+              =< link_to 'GitHub', 'https://twitter.com/jnchito/', target: '_blank'
