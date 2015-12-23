@@ -15,9 +15,13 @@ h1 Adventar Ranking
         th Date
         th Bookmark
     tbody
-      - @adventar_info[:entries].each do |entry|
+      / ranking logic => http://stackoverflow.com/a/25042417/1058763
+      - rank = 1
+      - @adventar_info[:entries].each.with_index(1) do |entry, i|
+        - current_count = entry.bookmark_count
+        - prev_count = @adventar_info[:entries][i - 2].try(:bookmark_count)
         tr
-          td 0
+          td = current_count != prev_count ? rank = i : rank
           td = link_to (entry.title.presence || entry.url), entry.url, target: '_blank'
           td = entry.date
           td = entry.bookmark_count
