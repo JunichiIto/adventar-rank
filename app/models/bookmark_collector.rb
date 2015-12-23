@@ -14,6 +14,7 @@ class BookmarkCollector
     adventar_info[:entries].each_with_index do |entry, i|
       entry.bookmark_count = detect_bookmark_count(bookmark_counts, entry.url)
     end
+    adventar_info[:entries].sort_by!(&:bookmark_count).reverse!
     adventar_info
   end
 
