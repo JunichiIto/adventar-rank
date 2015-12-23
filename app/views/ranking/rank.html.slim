@@ -4,7 +4,7 @@ h1 Adventar Ranking
   .form-group
     label(for='url') URL
     =< text_field_tag :url, params[:url], class: 'form-control', style: 'width:280px;'
-  = submit_tag '送信', class: 'btn btn-default'
+  = submit_tag '送信', class: 'btn btn-default', data: { disable_with: '送信中...' }
 
 - if @adventar_info.present?
   h2 = link_to @adventar_info.title, params[:url]
