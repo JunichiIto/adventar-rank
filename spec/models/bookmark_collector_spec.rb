@@ -39,14 +39,25 @@ describe BookmarkCollector do
     end
   end
 
-  context 'Japanese in URL' do
+  context 'Medium in entries' do
     it 'collects data' do
-      url = 'http://www.adventar.org/calendars/853'
+      url = 'http://www.adventar.org/calendars/866'
       collector = BookmarkCollector.new(url)
-      VCR.use_cassette 'models/bookmarks_collector/collect_adventar_info_with_jp_url' do
+      VCR.use_cassette 'models/bookmarks_collector/collect_adventar_info_with_medium_url' do
         adventar_info = collector.collect_adventar_info
         expect(adventar_info).to be_present
+        medium_entry = adventar_info[:entries].find{|e| e.title == 'プログラマの3大美徳と子育て — Medium'}
+        expect(medium_entry.bookmark_count).to eq 16
       end
+    end
+  end
+
+  describe '::convert_medium_url' do
+    it 'converts URL' do
+      url = 'https://medium.com/@elgehelge/the-5-most-important-python-data-science-advancements-of-2015-a136482da89b#.v389x5a5s'
+      expect(BookmarkCollector.convert_medium_url(url)).to eq 'https://medium.com/@elgehelge/a136482da89b'
+      url = 'https://medium.com/@lestrrat/%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9E%E3%81%AE3%E5%A4%A7%E7%BE%8E%E5%BE%B3%E3%81%A8%E5%AD%90%E8%82%B2%E3%81%A6-d180497dd759'
+      expect(BookmarkCollector.convert_medium_url(url)).to eq 'https://medium.com/@lestrrat/d180497dd759'
     end
   end
 end

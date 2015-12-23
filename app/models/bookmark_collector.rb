@@ -18,14 +18,25 @@ class BookmarkCollector
     adventar_info
   end
 
+  MEDIUM_URL_REGEX = /https?:\/\/medium.com\/@\w+\//
+  def self.convert_medium_url(entry_url)
+    return entry_url unless entry_url =~ MEDIUM_URL_REGEX
+    root_url = entry_url[MEDIUM_URL_REGEX]
+    entry_path = entry_url.gsub(MEDIUM_URL_REGEX, '')
+    entry_id = entry_path.split('-').last.split('#').first
+    "#{root_url}#{entry_id}"
+  end
+
   private
 
   def fetch_adventar_info
-    return @adventar_info if @adventar_info
-
     uri = URI.parse(json_url)
     json = Net::HTTP.get(uri)
-    @adventar_info = Hashie::Mash.new(JSON.parse(json))
+    Hashie::Mash.new(JSON.parse(json)).tap do |info|
+      info[:entries].each do |entry|
+        entry.url = self.class.convert_medium_url(entry.url)
+      end
+    end
   end
 
   def fetch_bookmark_counts(entries)
