@@ -38,4 +38,15 @@ describe BookmarkCollector do
       end
     end
   end
+
+  context 'Japanese in URL' do
+    it 'collects data' do
+      url = 'http://www.adventar.org/calendars/853'
+      collector = BookmarkCollector.new(url)
+      VCR.use_cassette 'models/bookmarks_collector/collect_adventar_info_with_jp_url' do
+        adventar_info = collector.collect_adventar_info
+        expect(adventar_info).to be_present
+      end
+    end
+  end
 end

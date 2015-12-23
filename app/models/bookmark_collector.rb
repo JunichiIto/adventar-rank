@@ -38,6 +38,11 @@ class BookmarkCollector
   end
 
   def escape_url(str)
+    unless str =~ /\A[[:ascii:]]+\Z/
+      original = str
+      str = URI.escape(str)
+      puts "[WARN] NOT ASCII: #{original} => #{str}"
+    end
     str.gsub(':', '%3A').gsub('/', '%2F')
   end
 
