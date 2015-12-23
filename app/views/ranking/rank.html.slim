@@ -3,8 +3,8 @@ p.how-to-use AdventarのURLを送信すると、はてなブックマーク数�
 / utf8のパラメータを出したくないので、form_tagヘルパーを使わない
 form.form-inline.url-form(action=root_path method='get')
   .form-group
-    =< text_field_tag :url, params[:url], class: 'form-control url-input', placeholder: 'http://www.adventar.org/calendars/12345'
-  = submit_tag '送信', class: 'btn btn-primary', data: { disable_with: '送信中...' }, name: nil
+    = text_field_tag :url, params[:url], class: 'form-control url-input', placeholder: 'http://www.adventar.org/calendars/1234'
+    =< submit_tag '送信', class: 'btn btn-primary', data: { disable_with: '送信中...' }, name: nil
 
 .share-buttons
   span.hatena = hatena_bookmark
