@@ -17,7 +17,6 @@ form.form-inline.url-form(action=root_path method='get')
         th Rank
         th Entry
         th Date
-        th Bookmark
     tbody
       / ranking logic => http://stackoverflow.com/a/25042417/1058763
       - rank = 1
@@ -30,6 +29,7 @@ form.form-inline.url-form(action=root_path method='get')
             - if rank.between?(1, 3)
               = fa_icon 'trophy', class: "rank-#{rank}"
             =< rank
-          td.col-entry = link_to (entry.title.presence || entry.url), entry.url, target: '_blank'
+          td.col-entry
+            => link_to (entry.title.presence || entry.url), entry.url, target: '_blank'
+            = render 'ranking/bookmark', entry_url: entry.url
           td.col-date.no-wrap = entry.date
-          td.col-bookmark = render 'ranking/bookmark', entry_url: entry.url
