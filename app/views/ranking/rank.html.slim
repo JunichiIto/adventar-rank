@@ -1,9 +1,10 @@
 p.how-to-use AdventarのURLを送信すると、はてなブックマーク数のランキングを表示します。
 
-= form_tag root_path, method: :get, class: 'form-inline url-form' do
+/ utf8のパラメータを出したくないので、form_tagヘルパーを使わない
+form.form-inline.url-form(action=root_path method='get')
   .form-group
     =< text_field_tag :url, params[:url], class: 'form-control url-input', placeholder: 'http://www.adventar.org/calendars/12345'
-  = submit_tag '送信', class: 'btn btn-primary', data: { disable_with: '送信中...' }
+  = submit_tag '送信', class: 'btn btn-primary', data: { disable_with: '送信中...' }, name: nil
 
 - if @adventar_info.present?
   h2.calendar-title = link_to @adventar_info.title, params[:url]
