@@ -1,0 +1,23 @@
+h1 Adventar Ranking
+
+= form_tag '/ranking', method: :get do
+  label URL
+  = text_field_tag :url, params[:url]
+  = submit_tag '送信'
+
+- if @adventar_info.present?
+  h1 = link_to @adventar_info.title, params[:url]
+  table.table
+    thead
+      tr
+        th Rank
+        th Entry
+        th Date
+        th Bookmark
+    tbody
+      - @adventar_info[:entries].each do |entry|
+        tr
+          td 0
+          td = link_to (entry.title.presence || entry.url), entry.url, target: '_blank'
+          td = entry.date
+          td = entry.bookmark_count
