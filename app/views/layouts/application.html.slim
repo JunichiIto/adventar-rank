@@ -2,9 +2,7 @@ doctype html
 html
   head
     meta[name="viewport" content="width=device-width, initial-scale=1.0"]
-    title
-      = "#{@adventar_info.title} - " if @adventar_info.present?
-      | Adventar Rank
+    title = page_title
     meta name="description" content="#{content_for?(:description) ? yield(:description) : 'Adventar Rank'}"
     == stylesheet_link_tag "application", :media => 'all', 'data-turbolinks-track' => true
     == javascript_include_tag 'application', 'data-turbolinks-track' => true
