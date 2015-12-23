@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Collect bookmarks' do
   scenario 'success' do
     visit root_url
-    fill_in 'URL', with: 'http://www.adventar.org/calendars/867'
+    fill_in 'url', with: 'http://www.adventar.org/calendars/867'
     VCR.use_cassette 'features/collect_bookmarks/success' do
       click_button '送信'
       expect(page).to have_selector 'h2', text: '地方在住ITエンジニア（元・地方在住も可） Advent Calendar 2015'
@@ -14,7 +14,7 @@ feature 'Collect bookmarks' do
 
   scenario 'not found URL' do
     visit root_url
-    fill_in 'URL', with: 'http://www.adventar.org/calendars/999999999'
+    fill_in 'url', with: 'http://www.adventar.org/calendars/999999999'
 
     VCR.use_cassette 'features/collect_bookmarks/not_found' do
       expect(Rails.logger).to receive(:error).twice
