@@ -32,6 +32,7 @@ class BookmarkCollector
 
   def fetch_adventar_info
     uri = URI.parse(json_url)
+    logger.info "[INFO] Fetching #{uri}"
     json = Net::HTTP.get(uri)
     Hashie::Mash.new(JSON.parse(json)).tap do |info|
       info[:entries].each do |entry|
@@ -46,6 +47,7 @@ class BookmarkCollector
     urls = entries.map{|e| e.url}.map{|s| escape_url(s)}.join('&url=')
     hatena_url = "http://api.b.st-hatena.com/entry.counts?url=#{urls}"
     uri = URI.parse(hatena_url)
+    logger.info "[INFO] Fetching #{uri}"
     json = Net::HTTP.get(uri)
     JSON.parse(json)
   end

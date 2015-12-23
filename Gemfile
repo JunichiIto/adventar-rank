@@ -42,3 +42,4 @@ end
 
 gem 'hashie'
 gem 'embiggen'
+gem 'actionpack-action_caching'
