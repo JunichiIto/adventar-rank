@@ -1,5 +1,6 @@
 $navbar-inverse-bg: #E46557;
-$navbar-inverse-link-color: #FFF;
+$navbar-inverse-link-color: #FCFCFC;
+$brand-primary: #e45541;
 
 // import the CSS framework
 @import "bootstrap-sprockets";
@@ -15,3 +16,9 @@ section {
   @extend .row;
   margin-top: 20px;
   }
+body {
+  background-image: image-url('nice_snow_@2X.png')
+}
+.col-main {
+  background-color: #FCFCFC;
+}
