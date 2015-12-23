@@ -1,9 +1,10 @@
 h1 Adventar Ranking
 
-= form_tag '/ranking', method: :get do
-  label URL
-  = text_field_tag :url, params[:url]
-  = submit_tag '送信'
+= form_tag '/ranking', method: :get, class: 'form-inline' do
+  .form-group
+    label URL
+    =< text_field_tag :url, params[:url], class: 'form-control', style: 'width:280px;'
+  = submit_tag '送信', class: 'btn btn-default'
 
 - if @adventar_info.present?
   h2 = link_to @adventar_info.title, params[:url]
