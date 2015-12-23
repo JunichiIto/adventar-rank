@@ -10,20 +10,21 @@ describe BookmarkCollector do
           ["地方在住記 - portal shit!", 10],
           ["大卒の元ニートが明石でプログラマをやっていた頃の話 #ruraladvent  - by shigemk2", 10],
           ["兵庫県の独学個人事業エンジニアの話", 7],
-          ["京から江戸へ（あるいは島原の乱が再び起こったら） #ruraladvent - この国では犬がコードを書いています", 3],
           ["新潟へIターンしてWEBエンジニアをしている話 - yuw27b’s blog", 3],
-          ["北海道札幌市在住の地方プログラマーが年収を公開しつつ地方の給料モデルを紹介 - North-Geek", 2],
+          ["京から江戸へ（あるいは島原の乱が再び起こったら） #ruraladvent - この国では犬がコードを書いています", 3],
           ["岩手と栃木でエンジニアしてた所感 - seri::diary", 2],
-          ["私が地方フリーランスプログラマーとして働くまで | システム屋まそお", 1],
+          ["北海道札幌市在住の地方プログラマーが年収を公開しつつ地方の給料モデルを紹介 - North-Geek", 2],
+          ["Webエンジニアの僕が東京=>名古屋で働くことになって4年経ち思うことをつらつらと。 - masayuki5160's diary", 1],
           ["岡山駅から広島駅へ通勤する日常について - One day at a time", 1],
           ["岩手で起業してリモートで仕事しています - ganezaのブログ", 1],
-          ["家族で東京からベトナムに移り住んだエンジニアの話 - The longest day in my life", 0],
+          ["私が地方フリーランスプログラマーとして働くまで | システム屋まそお", 1],
           [nil, 0],
-          ["すだちの国のエンジニア(未完) #ruraladvent - 鎌玉のよしなしごと", 0],
-          ["福山市のITエンジニア事情 | オブジェクト思考型ライフ", 0],
           ["\n青森県三沢市で起業して考えてること | Takuya  Tachibana | note\n", 0],
+          ["すだちの国のエンジニア(未完) #ruraladvent - 鎌玉のよしなしごと", 0],
           ["千葉県は房総地方にUターンして東京と行ったり来たりしてるWEBエンジニアの話 #ruraladvent [C!]", 0],
-          ["和歌山でITエンジニア(地方在住ITエンジニア・アドベントカレンダー2015) - vaguely", 0]
+          ["和歌山でITエンジニア(地方在住ITエンジニア・アドベントカレンダー2015) - vaguely", 0],
+          ["福山市のITエンジニア事情 | オブジェクト思考型ライフ", 0],
+          ["家族で東京からベトナムに移り住んだエンジニアの話 - The longest day in my life", 0]
       ]
     end
 
@@ -35,6 +36,12 @@ describe BookmarkCollector do
         expect(adventar_info).to be_present
         bookmark_counts = adventar_info[:entries].map{|e| [e.title, e.bookmark_count]}
         expect(bookmark_counts).to eq expected_bookmark_count
+
+        # 短縮URLが展開されていることを検証する
+        shorten_url_entry = adventar_info[:entries].find{|e| e.date == '2015-12-14' }
+        expect(shorten_url_entry.url).to eq 'http://nekomimi-taicho.com/?p=24969'
+        # 本来は下記のようになるべきだが、パフォーマンス面で不安があるのでredirectを繰り返すのは諦める
+        # expect(shorten_url_entry.url).to eq 'http://nekomimi-taicho.com/archives/24969/'
       end
     end
   end

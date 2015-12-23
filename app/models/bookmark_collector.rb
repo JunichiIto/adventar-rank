@@ -1,6 +1,7 @@
 require 'net/http'
 require 'uri'
 require 'json'
+require 'embiggen'
 
 class BookmarkCollector
   attr_reader :url
@@ -34,7 +35,8 @@ class BookmarkCollector
     json = Net::HTTP.get(uri)
     Hashie::Mash.new(JSON.parse(json)).tap do |info|
       info[:entries].each do |entry|
-        entry.url = self.class.convert_medium_url(entry.url)
+        expanded_url = Embiggen::URI(entry.url).expand(redirects: 10).to_s
+        entry.url = self.class.convert_medium_url(expanded_url)
       end
     end
   end

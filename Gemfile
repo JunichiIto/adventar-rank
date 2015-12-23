@@ -41,3 +41,4 @@ group :test do
 end
 
 gem 'hashie'
+gem 'embiggen'
