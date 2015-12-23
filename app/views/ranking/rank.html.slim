@@ -1,6 +1,6 @@
 h1 Adventar Ranking
 
-= form_tag '/ranking', method: :get, class: 'form-inline' do
+= form_tag root_path, method: :get, class: 'form-inline' do
   .form-group
     label(for='url') URL
     =< text_field_tag :url, params[:url], class: 'form-control', style: 'width:280px;'
