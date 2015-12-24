@@ -17,8 +17,8 @@ form.form-inline.url-form(action=root_path method='get')
     = link_to @adventar_info.title, params[:url]
     =< render 'ranking/bookmark', entry_url: params[:url]
   .last-update
-    | Last update:
-    =< l Time.current
+    = "#{@adventar_info[:entries].size} entries / Last update: "
+    = l Time.current
   table.table
     thead
       tr
