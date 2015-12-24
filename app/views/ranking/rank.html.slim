@@ -14,7 +14,7 @@ form.form-inline.url-form(action=root_path method='get')
 
 - if @adventar_info.present?
   h2.calendar-title
-    = link_to @adventar_info.title, params[:url]
+    = link_to @adventar_info.title, params[:url], target: '_blank'
     =< render 'ranking/bookmark', entry_url: params[:url]
   .last-update
     = "#{@adventar_info[:entries].size} entries / Last update: "
