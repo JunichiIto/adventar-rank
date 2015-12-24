@@ -1,4 +1,6 @@
-p.how-to-use AdventarのURLを送信すると、はてなブックマーク数のランキングを表示します。
+p.how-to-use
+  = link_to 'Adventar', 'http://www.adventar.org/', target: '_blank'
+  | のURLを送信すると、はてなブックマーク数のランキングを表示します。
 
 / utf8のパラメータを出したくないので、form_tagヘルパーを使わない
 form.form-inline.url-form(action=root_path method='get')
