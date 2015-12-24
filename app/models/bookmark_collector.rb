@@ -43,10 +43,17 @@ class BookmarkCollector
     json = Net::HTTP.get(uri)
     Hashie::Mash.new(JSON.parse(json)).tap do |info|
       info[:entries].each do |entry|
-        expanded_url = Embiggen::URI(entry.url).expand(redirects: 10).to_s
+        expanded_url = safely_expand_url(entry.url)
         entry.url = self.class.convert_medium_url(expanded_url)
       end
     end
+  end
+
+  def safely_expand_url(url)
+    Embiggen::URI(url).expand(redirects: 10).to_s
+  rescue => e
+    logger.warn "[WARN] Failed to expand URL: #{url} / #{e.message}"
+    url
   end
 
   def fetch_bookmark_counts(entries)
