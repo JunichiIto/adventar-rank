@@ -80,4 +80,16 @@ describe BookmarkCollector do
       expect(BookmarkCollector.convert_medium_url(url)).to eq 'https://medium.com/@lestrrat/d180497dd759'
     end
   end
+
+  describe '::bookmark_url_trimmer' do
+    it 'trims URL' do
+      url = 'http://detham.tumblr.com/post/134844924754/%E5%AE%B6%E6%97%8F%E3%81%A7%E6%9D%B1%E4%BA%AC%E3%81%8B%E3%82%89%E3%83%99%E3%83%88%E3%83%8A%E3%83%A0%E3%81%AB%E7%A7%BB%E3%82%8A%E4%BD%8F%E3%82%93%E3%81%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E3%81%AE%E8%A9%B1'
+      expected = 'http://detham.tumblr.com/post/134844924754/%E5%AE%B6%E6%97%8F%E3%81%A7%E6%9D%B1%E4%BA%AC%E3%81%8B%E3%82%89%E3%83%99%E3%83%88%E3%83%8A%E3%83%A0%E3%81%AB%E7%A7%BB%E3%82%8A%E4%BD%8F%E3%82%93%E3%81%A0%E3%82%A8%E3%83%B3%E3%82%B8%E3%83%8B%E3%82%A2%E3%81%AE%E8'
+      expect(BookmarkCollector.bookmark_url_trimmer(url)).to eq(expected)
+
+      url = 'http://mat-aki.net/post/135434313822/%E6%94%B9%E5%96%84%E3%82%92%E7%B6%9A%E3%81%91%E3%82%8Bsonicgarden%E3%81%AE%E4%B8%AD%E9%80%94%E6%8E%A1%E7%94%A8%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8Brails%E3%81%AE%E6%8A%80%E8%A1%93%E5%8A%9B%E3%81%AE%E6%95%99%E8%82%B2%E3%83%97%E3%83%AD%E3%82%BB%E3%82%B9%E3%82%92%E3%81%94%E7%B4%B9%E4%BB%8B'
+      expected = 'http://mat-aki.net/post/135434313822/%E6%94%B9%E5%96%84%E3%82%92%E7%B6%9A%E3%81%91%E3%82%8Bsonicgarden%E3%81%AE%E4%B8%AD%E9%80%94%E6%8E%A1%E7%94%A8%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8Brails%E3%81%AE%E6%8A%80%E8%A1%93%E5%8A%9B%E3%81%AE%E6%95%99%E8%82%B2%E3'
+      expect(BookmarkCollector.bookmark_url_trimmer(url)).to eq(expected)
+    end
+  end
 end

@@ -31,6 +31,10 @@ class BookmarkCollector
     "#{root_url}#{entry_id}"
   end
 
+  def self.bookmark_url_trimmer(url)
+    url.size > 255 ? url[0..254].gsub(/%\w?\z/, '') : url
+  end
+
   private
 
   def fetch_adventar_info
@@ -47,7 +51,7 @@ class BookmarkCollector
 
   def fetch_bookmark_counts(entries)
     # http://api.b.st-hatena.com/entry.counts?url=http%3A%2F%2Fwww.hatena.ne.jp%2F&url=http%3A%2F%2Fb.hatena.ne.jp%2F
-    urls = entries.map{|e| e.url}.map{|s| truncate_long_url(escape_url(s)) }.join('&url=')
+    urls = entries.map{|e| e.url}.map{|s| build_bookmark_search_url(s) }.join('&url=')
     hatena_url = "http://api.b.st-hatena.com/entry.counts?url=#{urls}"
     uri = URI.parse(hatena_url)
     logger.info "[INFO] Fetching #{uri}"
@@ -55,24 +59,16 @@ class BookmarkCollector
     JSON.parse(json)
   end
 
-  def escape_url(str)
-    unless str =~ /\A[[:ascii:]]+\Z/
-      original = str
-      str = URI.escape(str)
-      puts "[WARN] NOT ASCII: #{original} => #{str}"
-    end
-    str.gsub(':', '%3A').gsub('/', '%2F')
+  def build_bookmark_search_url(str)
+    escape_url(self.class.bookmark_url_trimmer(jp_to_ascii(str)))
   end
 
-  def truncate_long_url(str)
-    # はてなブックマークは長すぎるURLをカットするのでその対策。
-    if str.size > 266
-      str[0..265].tap do |truncated_url|
-        logger.warn "[WARN] Truncate long URL: #{str} => #{truncated_url}"
-      end
-    else
-      str
-    end
+  def jp_to_ascii(str)
+    str =~ /\A[[:ascii:]]+\Z/ ? str : URI.escape(str)
+  end
+
+  def escape_url(str)
+    str.gsub(':', '%3A').gsub('/', '%2F')
   end
 
   def json_url
