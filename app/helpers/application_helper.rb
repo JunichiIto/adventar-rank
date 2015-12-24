@@ -1,7 +1,14 @@
+require 'uri'
+
 module ApplicationHelper
   def page_title
     title = "#{@adventar_info.title} - " if @adventar_info.present?
     "#{title} Adventar Rank"
+  end
+
+  def truncate_too_long_url(url)
+    # はてなブックマークは長すぎるURLをカットするのでその対策。
+    url[0..253]
   end
 
   def twitter_tweet(url: request.original_url)

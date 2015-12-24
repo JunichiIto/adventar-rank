@@ -44,7 +44,7 @@ class BookmarkCollector
 
   def fetch_bookmark_counts(entries)
     # http://api.b.st-hatena.com/entry.counts?url=http%3A%2F%2Fwww.hatena.ne.jp%2F&url=http%3A%2F%2Fb.hatena.ne.jp%2F
-    urls = entries.map{|e| e.url}.map{|s| escape_url(s)}.join('&url=')
+    urls = entries.map{|e| e.url}.map{|s| truncate_long_url(escape_url(s)) }.join('&url=')
     hatena_url = "http://api.b.st-hatena.com/entry.counts?url=#{urls}"
     uri = URI.parse(hatena_url)
     logger.info "[INFO] Fetching #{uri}"
@@ -59,6 +59,17 @@ class BookmarkCollector
       puts "[WARN] NOT ASCII: #{original} => #{str}"
     end
     str.gsub(':', '%3A').gsub('/', '%2F')
+  end
+
+  def truncate_long_url(str)
+    # はてなブックマークは長すぎるURLをカットするのでその対策。
+    if str.size > 266
+      str[0..265].tap do |truncated_url|
+        logger.warn "[WARN] Truncate long URL: #{str} => #{truncated_url}"
+      end
+    else
+      str
+    end
   end
 
   def json_url

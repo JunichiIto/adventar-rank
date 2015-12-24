@@ -44,17 +44,30 @@ describe BookmarkCollector do
         # expect(shorten_url_entry.url).to eq 'http://nekomimi-taicho.com/archives/24969/'
       end
     end
-  end
 
-  context 'Medium in entries' do
-    it 'collects data' do
-      url = 'http://www.adventar.org/calendars/866'
-      collector = BookmarkCollector.new(url)
-      VCR.use_cassette 'models/bookmarks_collector/collect_adventar_info_with_medium_url' do
-        adventar_info = collector.collect_adventar_info
-        expect(adventar_info).to be_present
-        medium_entry = adventar_info[:entries].find{|e| e.title == 'プログラマの3大美徳と子育て — Medium'}
-        expect(medium_entry.bookmark_count).to eq 16
+    context 'Medium in entries' do
+      it 'collects data' do
+        url = 'http://www.adventar.org/calendars/866'
+        collector = BookmarkCollector.new(url)
+        VCR.use_cassette 'models/bookmarks_collector/collect_adventar_info_with_medium_url' do
+          adventar_info = collector.collect_adventar_info
+          expect(adventar_info).to be_present
+          medium_entry = adventar_info[:entries].find{|e| e.title == 'プログラマの3大美徳と子育て — Medium'}
+          expect(medium_entry.bookmark_count).to eq 16
+        end
+      end
+    end
+
+    context 'Too long URL' do
+      it 'collects data' do
+        url = 'http://www.adventar.org/calendars/855'
+        collector = BookmarkCollector.new(url)
+        VCR.use_cassette 'models/bookmarks_collector/collect_adventar_info_with_too_long_url' do
+          adventar_info = collector.collect_adventar_info
+          expect(adventar_info).to be_present
+          medium_entry = adventar_info[:entries].find{|e| e.title == '改善を続けるSonicGardenの中途採用におけるRailsの技術力の教育プロセスをご紹介 - Small Start'}
+          expect(medium_entry.bookmark_count).to eq 27
+        end
       end
     end
   end
