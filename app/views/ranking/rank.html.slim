@@ -13,7 +13,9 @@ form.form-inline.url-form(action=root_path method='get')
   span.twitter = twitter_tweet
 
 - if @adventar_info.present?
-  h2.calendar-title = link_to @adventar_info.title, params[:url]
+  h2.calendar-title
+    = link_to @adventar_info.title, params[:url]
+    =< render 'ranking/bookmark', entry_url: params[:url]
   .last-update
     | Last update:
     =< l Time.current
