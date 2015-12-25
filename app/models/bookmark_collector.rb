@@ -40,7 +40,9 @@ class BookmarkCollector
   def fetch_adventar_info
     uri = URI.parse(json_url)
     logger.info "[INFO] Fetching #{uri}"
-    json = Net::HTTP.get(uri)
+    json = Retryable.retryable do
+      Net::HTTP.get(uri)
+    end
     Hashie::Mash.new(JSON.parse(json)).tap do |info|
       info[:entries].each do |entry|
         expanded_url = safely_expand_url(entry.url)
@@ -62,7 +64,9 @@ class BookmarkCollector
     hatena_url = "http://api.b.st-hatena.com/entry.counts?url=#{urls}"
     uri = URI.parse(hatena_url)
     logger.info "[INFO] Fetching #{uri}"
-    json = Net::HTTP.get(uri)
+    json = Retryable.retryable do
+      Net::HTTP.get(uri)
+    end
     JSON.parse(json)
   end
 
